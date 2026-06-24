@@ -6,7 +6,7 @@ from ingest import load_and_split_pdf
 
 def create_vector_store():
     model = SentenceTransformer(
-        "models/bge-small-en-v1.5"
+        "BAAI/bge-small-en-v1.5"
     )
 
     client = PersistentClient(

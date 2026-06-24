@@ -2,7 +2,7 @@ from sentence_transformers import SentenceTransformer
 
 print("Loading Model...")
 
-model = SentenceTransformer("models/bge-small-en-v1.5")
+model = SentenceTransformer("BAAI/bge-small-en-v1.5")
 
 print("Model Loaded!")
 

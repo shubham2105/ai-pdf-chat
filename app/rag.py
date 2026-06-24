@@ -7,14 +7,17 @@ import os
 load_dotenv()
 
 embedding_model = SentenceTransformer(
-    "models/bge-small-en-v1.5"
+    "BAAI/bge-small-en-v1.5"
 )
 
-client = PersistentClient(path="chroma_db")
+# client = PersistentClient(path="chroma_db")
 
-collection = client.get_collection(
-    name="pdf_chunks"
-)
+# collection = client.get_collection(
+#     name="pdf_chunks"
+# )
+def get_collection():
+    client = PersistentClient(path="chroma_db")
+    return client.get_collection(name="pdf_chunks")
 
 groq_client = Groq(
     api_key=os.getenv("GROQ_API_KEY")
@@ -26,6 +29,12 @@ def retrieval_context(question):
     embedding = embedding_model.encode(
         question
     ).tolist()
+
+    # results = collection.query(
+    #     query_embeddings=[embedding],
+    #     n_results=5
+    # )
+    collection = get_collection()
 
     results = collection.query(
         query_embeddings=[embedding],

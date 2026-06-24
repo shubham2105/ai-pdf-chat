@@ -6,7 +6,7 @@ start = time.time()
 
 print("Model Laoding")
 
-model= SentenceTransformer("models/bge-small-en-v1.5")
+model= SentenceTransformer("BAAI/bge-small-en-v1.5")
 
 client = PersistentClient(path="chroma_db")
 collection = client.get_collection(name="pdf_chunks")
