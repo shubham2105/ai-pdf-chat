@@ -29,27 +29,28 @@ def retrieval_context(question):
 
     results = collection.query(
         query_embeddings=[embedding],
-        n_results=3
+        n_results=5
     )
-    print(results["metadatas"][0])
-    return "\n\n".join(
+    context = "\n\n".join(
         results["documents"][0]
     )
-
+    sources = (results["metadatas"][0])
+    return context, sources
 
 def answer_question(question):
 
-    context = retrieval_context(
+    context,sources  = retrieval_context(
         question
     )
 
     prompt = f"""
 You are a helpful AI assistant.
 
-Answer ONLY using the provided context.
+Answer the question using the provided context.
 
-If the answer cannot be found in the context, say:
-"I could not find that information in the document."
+If the context contains enough information to answer, provide a concise explanation.
+
+Only say "I could not find that information in the document" if the context is completely unrelated to the question.
 
 Context:
 {context}
@@ -59,7 +60,6 @@ Question:
 
 Answer:
 """
-
     response = groq_client.chat.completions.create(
         model="meta-llama/llama-4-scout-17b-16e-instruct",
         messages=[
@@ -70,19 +70,22 @@ Answer:
         ]
     )
 
-    return response.choices[0].message.content
+    return {
+    "answer": response.choices[0].message.content,
+    "sources": list(sources)
+}
 
 
-while True:
+# while True:
 
-    question = input("\nAsk a Question: ")
+#     question = input("\nAsk a Question: ")
 
-    if question.lower() == "exit":
-        break
+#     if question.lower() == "exit":
+#         break
 
-    answer = answer_question(
-        question
-    )
+#     answer = answer_question(
+#         question
+#     )
 
-    print("\nAnswer:\n")
-    print(answer)
+#     print("\nAnswer:\n")
+#     print(answer)

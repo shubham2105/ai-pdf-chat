@@ -9,3 +9,5 @@
  uvicorn
  langchain-text-splitters
  groq
+ streamlit
+ torchvision
