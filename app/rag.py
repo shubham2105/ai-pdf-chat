@@ -31,7 +31,7 @@ def retrieval_context(question):
         query_embeddings=[embedding],
         n_results=3
     )
-
+    print(results["metadatas"][0])
     return "\n\n".join(
         results["documents"][0]
     )
