@@ -44,7 +44,12 @@ def answer_question(question):
     )
 
     prompt = f"""
-Use the following context to answer the question.
+You are a helpful AI assistant.
+
+Answer ONLY using the provided context.
+
+If the answer cannot be found in the context, say:
+"I could not find that information in the document."
 
 Context:
 {context}
