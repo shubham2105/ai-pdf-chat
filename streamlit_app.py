@@ -1,5 +1,8 @@
 import streamlit as st
+from app.setup_vector_store import initialize_vector_store
+initialize_vector_store()
 from app.rag import answer_question
+
 
 st.set_page_config(
     page_title="AI PDF Chat",
